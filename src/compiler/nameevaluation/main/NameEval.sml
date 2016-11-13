@@ -2609,7 +2609,9 @@ in (* local *)
 (*
         val exnConList = (map EXN exnInfoList) @ (map EXEXN (LongsymbolEnv.listItems externExnSet))
 *)
+(*
         val returnTopEnv = RL.renameLomgsymbolTopEnv renameEnv returnTopEnv
+*)
       in
         case EU.getErrors () of
           [] => {requireTopEnv = evalTopEnv,
