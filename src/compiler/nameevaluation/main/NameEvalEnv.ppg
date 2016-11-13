@@ -317,6 +317,14 @@ in
         @format({id,funId,argId}) "structure(" id "=" funId "(" argId")" ")" 
        *)
       FUNAPP of {id:structureId, funId:functorId, argId:structureId}
+    | 
+      (*%
+        @format(id) "structureInFunarg(" id ")" 
+       *)
+      (*% @prefix printTy_
+        @format(id) "structureInFunarg(" id ")" 
+       *)
+      FUNARG of structureId
 
   (*%
      @formatter(SymbolEnv.map) TermFormat.formatEnclosedSymbolEnvPlain

@@ -28,6 +28,13 @@ struct
       SIGENV 
     | STRENV of StructureID.id
     | FUNAPP of {id:StructureID.id, funId:FunctorID.id, argId:StructureID.id}
+(* 2016-11-06 ohori: interfaceでのfunctor argumentをfunctor replicationに
+  使用禁止するための暫定措置
+  参照：bug 331_functorSmi-a
+  FUNARGはSTRENVと同等の振る舞い．
+  ただし，interfaceの中でのstructure replicationを禁止．
+ *)
+    | FUNARG of StructureID.id
   datatype strE
     = STR of {env:env, strKind:strKind} SymbolEnv.map
   and env

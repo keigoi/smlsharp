@@ -627,7 +627,16 @@ in
             NONE => 
             (
              EU.enqueueError
-               (loc, E.ExceptionNameUndefined("EI-140", {longsymbol = path}));
+               (loc, E.StructureNameUndefined("EI-140", {longsymbol = path}));
+             (renameEnv, 
+              externSet, 
+              {env=V.emptyEnv, strKind=V.STRENV(StructureID.generate())},
+              nil)
+            )
+          | SOME {env, strKind=V.FUNARG _} => 
+            (
+             EU.enqueueError
+               (loc, E.StructureRepOfFuncrorArgInInterface("EI-141", {longsymbol = path}));
              (renameEnv, 
               externSet, 
               {env=V.emptyEnv, strKind=V.STRENV(StructureID.generate())},
@@ -1059,6 +1068,11 @@ in
               I.ICEXVAR {exInfo={ty,...},...} => ty
             | I.ICEXN {ty,...} => ty
             | I.ICEXN_CONSTRUCTOR _ => BT.exntagITy
+(* 2016-11-06 ohori: structure replicationの対象がfunctor argumentの場合，ICVAR等があり得る
+            | I.ICVAR {exInfo={ty,...},...} => ty
+            | I.ICEXN {ty,...} => ty
+            | I.ICEXN_CONSTRUCTOR _ => BT.exntagITy
+*)
             | _ => 
               (
                raise bug "*** VARTOTY ***"

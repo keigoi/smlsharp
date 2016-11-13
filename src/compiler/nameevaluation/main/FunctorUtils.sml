@@ -212,7 +212,11 @@ in
               val {varPats=pats2, exnPats=exnPats2, env=env, exnTagDecls=exnTagDecls2} = 
                   genArgVarE path varE env
               val env = genArgTyE path tyE env
+(* 2016-11-06 ohori: bug 331_functorSmi:
+   Functor argumentを仮に実体化したstrkindは，FUNARGとする．
               val strKind = V.STRENV (StructureID.generate())
+*)
+              val strKind = V.FUNARG (StructureID.generate())
             in
               {varPats=pats1@pats2,
                exnPats=exnPats@exnPats2, 

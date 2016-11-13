@@ -42,6 +42,7 @@ local
       V.SIGENV  => print "SIGENV\n"
     | V.STRENV id => print ("STRENV" ^ StructureID.toString id ^ "\n")
     | V.FUNAPP  {id,...} => print ("FUNAPP" ^ StructureID.toString id ^ "\n")
+    | V.FUNARG  id => print ("FUNARG" ^ StructureID.toString id ^ "\n")
 
  
   fun bug s = Bug.Bug ("NameEval: " ^ s)
@@ -2373,7 +2374,9 @@ So we change exnSet to path exnMap in genExportIdstatus
         SymbolEnv.app
           (fn {env, strKind = V.SIGENV} => ()
             | {env, strKind = V.FUNAPP _} => setUsedflagsEnv topEnv env
-            | {env, strKind = V.STRENV _} => setUsedflagsEnv topEnv env)
+            | {env, strKind = V.STRENV _} => setUsedflagsEnv topEnv env
+            | {env, strKind = V.FUNARG _} => setUsedflagsEnv topEnv env
+          )
           strEntryMap
     fun setUsedflagsFunE env (funE:V.funE) =
         SymbolEnv.app
@@ -2441,7 +2444,9 @@ So we change exnSet to path exnMap in genExportIdstatus
            | V.FUNAPP _ => ((externExnSet,externVarSet), icdecls)
 *)
            | V.FUNAPP _ => genExterndeclsEnv (externExnSet,externVarSet) env icdecls
-           | V.STRENV _ => genExterndeclsEnv (externExnSet,externVarSet) env icdecls)
+           | V.STRENV _ => genExterndeclsEnv (externExnSet,externVarSet) env icdecls
+           | V.FUNARG _ => genExterndeclsEnv (externExnSet,externVarSet) env icdecls
+      )
       ((externExnSet,externVarSet), icdecls)
       strEntryMap
       
